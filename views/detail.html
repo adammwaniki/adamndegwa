@@ -1,0 +1,38 @@
+{{define "detail.html"}}
+<article class="art-page">
+  <header class="art-header">
+    <a class="art-back" href="{{.BackURL}}" hx-get="{{.BackURL}}" hx-target="#page-wrapper" hx-push-url="true">&larr; {{.Section.Title}}</a>
+    <div class="pg-header-label">{{.Section.Label}} <span>// {{.Section.AccentLabel}}</span> &mdash; {{printf "%02d" .CardIndex}}</div>
+    <h1>{{.Card.Title}}</h1>
+    <div class="art-meta">
+      <span>{{.Card.CommaSubtitle}}</span>
+      <span aria-hidden="true">&middot;</span>
+      <time datetime="{{.Card.Date}}">{{.Card.FormattedDate}}</time>
+      {{if .Card.Updated}}<span aria-hidden="true">&middot;</span><span>Updated <time datetime="{{.Card.Updated}}">{{.Card.FormattedUpdated}}</time></span>{{end}}
+      {{if .Card.ReadingTime}}<span aria-hidden="true">&middot;</span><span>{{.Card.ReadingTime}} read</span>{{end}}
+    </div>
+    {{if .Card.DemoURL}}<a class="art-demo" href="{{.Card.DemoURL}}" rel="external">View project &nearr;</a>{{end}}
+  </header>
+
+  <div class="art-body">
+    {{raw .Card.Detail}}
+  </div>
+
+  <nav class="art-pagenav" aria-label="More in {{.Section.Title}}">
+    {{if .PrevCard}}<a rel="prev" href="{{.PrevCard.URL}}" hx-get="{{.PrevCard.URL}}" hx-target="#page-wrapper" hx-push-url="true"><span class="pagenav-dir">&larr; Previous</span><span class="pagenav-title">{{.PrevCard.Title}}</span></a>{{else}}<span></span>{{end}}
+    {{if .NextCard}}<a rel="next" href="{{.NextCard.URL}}" hx-get="{{.NextCard.URL}}" hx-target="#page-wrapper" hx-push-url="true"><span class="pagenav-dir">Next &rarr;</span><span class="pagenav-title">{{.NextCard.Title}}</span></a>{{end}}
+  </nav>
+
+  {{if .RelatedCards}}
+  <aside class="related" aria-label="Related articles">
+    <h2>Related</h2>
+    <div class="cards-grid">
+      {{range .RelatedCards}}
+      {{template "card.html" (dict "SectionID" .SectionID "Card" .Card)}}
+      {{end}}
+    </div>
+  </aside>
+  {{end}}
+</article>
+{{template "footer.html" .}}
+{{end}}

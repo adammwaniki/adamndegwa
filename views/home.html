@@ -1,0 +1,37 @@
+{{define "home.html"}}
+<section class="hero" aria-label="Introduction">
+  <div class="hero-left">
+    <div class="name">
+      <h1>Adam<span class="surname">Ndegwa</span></h1>
+    </div>
+    <div class="role-row">
+      <span class="role-dot" aria-hidden="true"></span>
+      <span class="role">Software Engineer</span>
+    </div>
+  </div>
+  <div class="hero-right">
+    <p class="desc">I build systems that are <strong>simple to use</strong>, <strong>easy to maintain</strong>, and <strong>quick to scale</strong>. Great software doesn't announce itself; it just belongs.</p>
+    <div class="hero-rule" aria-hidden="true"></div>
+    <div class="ethos">
+      <span class="ethos-label">// ethos</span>
+      <p>The most impactful systems arise from the simplest needs.</p>
+      <div class="ethos-line" aria-hidden="true"></div>
+    </div>
+  </div>
+</section>
+
+<section class="tiles" aria-label="Sections">
+  {{range .Sections}}
+  <a class="tile" href="/{{.ID}}" hx-get="/{{.ID}}" hx-target="#page-wrapper" hx-push-url="true">
+    <div class="tile-top">
+      <span class="tile-num">{{.Label}}</span>
+      <svg class="tile-arrow" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+    </div>
+    <h2>{{.Title}}</h2>
+    <p>{{.TileDesc}}</p>
+    <div class="tile-line" aria-hidden="true"></div>
+  </a>
+  {{end}}
+</section>
+{{template "footer.html" .}}
+{{end}}

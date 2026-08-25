@@ -1,0 +1,15 @@
+{{define "card.html"}}
+<a class="card" href="{{.Card.URL .SectionID}}" hx-get="{{.Card.URL .SectionID}}" hx-target="#page-wrapper" hx-push-url="true">
+  <div class="card-top">
+    <span class="card-icon" aria-hidden="true">{{.Card.CardIcon}}</span>
+    <svg class="card-arrow" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+  </div>
+  <h2>{{.Card.Title}}</h2>
+  <p class="card-desc">{{.Card.Description}}</p>
+  <div class="card-meta">
+    <span>{{.Card.FormattedDate}}</span>
+    {{if .Card.ReadingTime}}<span aria-hidden="true">·</span><span>{{.Card.ReadingTime}}</span>{{end}}
+  </div>
+  <div class="card-line" aria-hidden="true"></div>
+</a>
+{{end}}

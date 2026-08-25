@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{.Description}}">
+  <title>{{.Title}}</title>
+
+  <!-- Canonical -->
+  <link rel="canonical" href="{{.CanonicalURL}}">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="{{.Title}}">
+  <meta property="og:description" content="{{.Description}}">
+  <meta property="og:url" content="{{.CanonicalURL}}">
+  <meta property="og:type" content="{{.OGType}}">
+  <meta property="og:site_name" content="Adam Ndegwa">
+  <meta property="og:image" content="https://adamndegwa.com/static/android-chrome-512x512.png">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="{{.Title}}">
+  <meta name="twitter:description" content="{{.Description}}">
+  <meta name="twitter:image" content="https://adamndegwa.com/static/android-chrome-512x512.png">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="Adam Ndegwa" href="https://adamndegwa.com/feed.xml">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Big+Shoulders+Inline+Display:wght@100..900&family=Google+Sans+Flex:opsz,wght@6..144,1..1000&family=Google+Sans+Code:wght@300..800&display=swap" rel="stylesheet">
+
+  <!-- Favicons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png">
+  <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+  <link rel="manifest" href="/static/site.webmanifest">
+  <meta name="theme-color" content="#F7F7F4">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/static/style.css">
+
+  <!-- Theme: apply before first paint to avoid flash. localStorage can throw
+       in privacy modes — never let it break automatic detection. -->
+  <script>
+  (function(){
+    var stored = null;
+    try { stored = localStorage.getItem('theme'); } catch(e) {}
+    var mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+    if (stored === 'dark' || (!stored && mq && mq.matches)) {
+      document.documentElement.setAttribute('data-theme','dark');
+    }
+  })();
+  </script>
+
+  <!-- JSON-LD Structured Data -->
+  {{if .IsDetail}}<script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"{{.Card.Title}}","description":"{{.Card.Description}}","datePublished":"{{.Card.Date}}",{{if .Card.Updated}}"dateModified":"{{.Card.Updated}}",{{end}}"author":{"@type":"Person","name":"Adam Ndegwa","url":"https://adamndegwa.com"},"publisher":{"@type":"Person","name":"Adam Ndegwa"}}
+  </script>
+  {{else if eq .Page "home"}}<script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebSite","name":"Adam Ndegwa","url":"https://adamndegwa.com","description":"Software Engineer. I build systems that are simple to use, easy to maintain, and quick to scale.","author":{"@type":"Person","name":"Adam Ndegwa","jobTitle":"Software Engineer","url":"https://adamndegwa.com"}}
+  </script>
+  {{end}}
+</head>
+<body>
+  <a class="skip-link" href="#page-wrapper">Skip to content</a>
+
+  {{template "nav.html" .}}
+
+  <main id="page-wrapper">
+    {{template "page-content" .}}
+  </main>
+
+  <script src="/static/htmx.min.js" defer></script>
+  <script>
+  (function(){
+    var navToggle = document.querySelector('.nav-toggle');
+    var mobileNav = document.querySelector('.mobile-nav');
+    if (navToggle && mobileNav) {
+      navToggle.addEventListener('click', function(){
+        var open = mobileNav.classList.toggle('open');
+        navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      });
+    }
+    var darkToggle = document.querySelector('.dark-toggle');
+    if (darkToggle) {
+      darkToggle.addEventListener('click', function(){
+        var d = document.documentElement;
+        var dark = d.getAttribute('data-theme') !== 'dark';
+        if (dark) { d.setAttribute('data-theme','dark'); } else { d.removeAttribute('data-theme'); }
+        try { localStorage.setItem('theme', dark ? 'dark' : 'light'); } catch(e) {}
+      });
+    }
+    // Track OS theme changes live unless the user chose explicitly.
+    var themeMQ = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+    if (themeMQ && themeMQ.addEventListener) {
+      themeMQ.addEventListener('change', function(e){
+        var stored = null;
+        try { stored = localStorage.getItem('theme'); } catch(err) {}
+        if (stored) return;
+        var d = document.documentElement;
+        if (e.matches) { d.setAttribute('data-theme','dark'); } else { d.removeAttribute('data-theme'); }
+      });
+    }
+    document.body.addEventListener('htmx:after-request', function(e){
+      var t = e.detail.xhr.getResponseHeader('HX-Title');
+      if (t) document.title = t;
+    });
+    document.body.addEventListener('htmx:after-settle', function(){
+      window.scrollTo({top: 0, behavior: 'instant'});
+    });
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape' && mobileNav && mobileNav.classList.contains('open')) {
+        mobileNav.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+        navToggle.setAttribute('aria-label', 'Open menu');
+        navToggle.focus();
+      }
+    });
+  })();
+  </script>
+</body>
+</html>

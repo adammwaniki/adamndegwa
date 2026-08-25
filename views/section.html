@@ -1,0 +1,13 @@
+{{define "section.html"}}
+<header class="pg-header">
+  <div class="pg-header-label">{{.Section.Label}} <span>// {{.Section.AccentLabel}}</span></div>
+  <h1>{{.Section.Title}}</h1>
+  <p>{{.Section.Subtitle}}</p>
+</header>
+<div class="cards-grid">
+  {{range .Section.Cards}}
+  {{template "card.html" (dict "SectionID" $.Section.ID "Card" .)}}
+  {{end}}
+</div>
+{{template "footer.html" .}}
+{{end}}

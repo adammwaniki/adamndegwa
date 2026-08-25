@@ -1,0 +1,28 @@
+{{define "tags.html"}}
+<header class="pg-header">
+  {{if .Tag}}
+  <div class="pg-header-label">// tags</div>
+  <h1>{{.Tag}}</h1>
+  <p>Articles tagged with &ldquo;{{.Tag}}&rdquo;.</p>
+  {{else}}
+  <div class="pg-header-label">// index</div>
+  <h1>Tags</h1>
+  <p>Browse articles by topic across all sections.</p>
+  {{end}}
+</header>
+
+{{if .Tag}}
+<div class="cards-grid">
+  {{range .TagCards}}
+  {{template "card.html" (dict "SectionID" .SectionID "Card" .Card)}}
+  {{end}}
+</div>
+{{else}}
+<ul class="tag-cloud">
+  {{range .AllTags}}
+  <li><a href="/tags/{{tagSlug .}}" hx-get="/tags/{{tagSlug .}}" hx-target="#page-wrapper" hx-push-url="true">{{.}}</a></li>
+  {{end}}
+</ul>
+{{end}}
+{{template "footer.html" .}}
+{{end}}

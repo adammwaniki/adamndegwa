@@ -1,0 +1,26 @@
+{{define "nav.html"}}
+<nav aria-label="Main">
+  <a class="nav-logo" href="/" hx-get="/" hx-target="#page-wrapper" hx-push-url="true">Adam&nbsp;<em>Ndegwa</em></a>
+  <ul class="nav-links">
+    {{range .Sections}}
+    <li><a href="/{{.ID}}" hx-get="/{{.ID}}" hx-target="#page-wrapper" hx-push-url="true">{{.NavTitle}}</a></li>
+    {{end}}
+    <li><a href="/tags" hx-get="/tags" hx-target="#page-wrapper" hx-push-url="true">Tags</a></li>
+    <li><a href="/contact" hx-get="/contact" hx-target="#page-wrapper" hx-push-url="true">Contact</a></li>
+  </ul>
+  <button class="dark-toggle" type="button" aria-label="Toggle dark mode">
+    <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+  </button>
+  <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+  </button>
+</nav>
+<ul class="mobile-nav">
+  {{range .Sections}}
+  <li><a href="/{{.ID}}" hx-get="/{{.ID}}" hx-target="#page-wrapper" hx-push-url="true">{{.NavTitle}}</a></li>
+  {{end}}
+  <li><a href="/tags" hx-get="/tags" hx-target="#page-wrapper" hx-push-url="true">Tags</a></li>
+  <li><a href="/contact" hx-get="/contact" hx-target="#page-wrapper" hx-push-url="true">Contact</a></li>
+</ul>
+{{end}}

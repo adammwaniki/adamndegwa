@@ -1,0 +1,13 @@
+{{define "page-content"}}
+{{if eq .Page "home"}}
+  {{template "home.html" .}}
+{{else if eq .Page "tags"}}
+  {{template "tags.html" .}}
+{{else if eq .Page "contact"}}
+  {{template "contact.html" .}}
+{{else if .IsDetail}}
+  {{template "detail.html" .}}
+{{else}}
+  {{template "section.html" .}}
+{{end}}
+{{end}}

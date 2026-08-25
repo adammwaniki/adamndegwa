@@ -1,0 +1,22 @@
+{{define "contact.html"}}
+<header class="pg-header">
+  <div class="pg-header-label">// hello</div>
+  <h1>Contact</h1>
+  <p>The simplest way to reach me is the best way.</p>
+</header>
+<div class="contact-list">
+  <a class="contact-row" href="mailto:hello@adamndegwa.com">
+    <span class="contact-label">Email</span>
+    <span class="contact-value">hello@adamndegwa.com</span>
+  </a>
+  <a class="contact-row" href="https://github.com/adammwaniki" rel="me">
+    <span class="contact-label">GitHub</span>
+    <span class="contact-value">@adammwaniki</span>
+  </a>
+  <a class="contact-row" href="https://www.linkedin.com/in/adam-ndegwa" rel="me">
+    <span class="contact-label">LinkedIn</span>
+    <span class="contact-value">Adam Ndegwa</span>
+  </a>
+</div>
+{{template "footer.html" .}}
+{{end}}
