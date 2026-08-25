@@ -1,0 +1,12 @@
+# Server Caddy config for adamndegwa.com.
+# Copy to /etc/caddy/Caddyfile on the server, then: systemctl reload caddy
+# TLS certificates are issued and renewed automatically once the A records
+# for @ and www resolve to the server.
+
+adamndegwa.com {
+    reverse_proxy 127.0.0.1:8080
+}
+
+www.adamndegwa.com {
+    redir https://adamndegwa.com{uri} permanent
+}

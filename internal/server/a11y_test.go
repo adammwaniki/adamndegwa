@@ -137,3 +137,73 @@ func TestContactValueFont(t *testing.T) {
 		t.Error(".contact-value should be set in Google Sans Flex")
 	}
 }
+
+// TestDarkHoverTextIsReadable: on hover, cards and tiles invert to the accent
+// background (--pine, which is Moss in dark mode). Mist/Brass text fails WCAG
+// on that background; dark mode must switch hover text to the dark theme's
+// black (--paper) instead.
+func TestDarkHoverTextIsReadable(t *testing.T) {
+	css, err := os.ReadFile("../../static/style.css")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, want := range []string{
+		`[data-theme="dark"] .tile:hover p{color:var(--paper)}`,
+		`[data-theme="dark"] .card:hover .card-desc{color:var(--paper)}`,
+		`[data-theme="dark"] .card:hover .card-meta{color:var(--paper)}`,
+	} {
+		if !strings.Contains(string(css), want) {
+			t.Errorf("style.css missing dark hover override %q", want)
+		}
+	}
+	// The old failing override must be gone.
+	if strings.Contains(string(css), `[data-theme="dark"] .tile:hover p{color:#D9DAD6}`) {
+		t.Error("old mist-on-moss dark hover override should be removed")
+	}
+}
+
+// TestMobileNavFadesAway: the mobile menu must fade (transition on
+// opacity/visibility rather than display toggling) and must close when a menu
+// link is tapped, revealing the swapped page underneath.
+func TestMobileNavFadesAway(t *testing.T) {
+	css, err := os.ReadFile("../../static/style.css")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, want := range []string{
+		"opacity:0", "visibility:hidden", "transition:opacity", // fade-capable hidden state
+		"opacity:1", "visibility:visible", // open state
+	} {
+		if !strings.Contains(string(css), want) {
+			t.Errorf("style.css missing %q for fading mobile nav", want)
+		}
+	}
+	// display:none on .mobile-nav would kill the fade — the base rule must
+	// not use it (the .mobile-nav.open{display:flex} pattern is gone).
+	if strings.Contains(string(css), ".mobile-nav.open{display:flex}") {
+		t.Error("mobile nav must fade via opacity/visibility, not display toggling")
+	}
+
+	s := newTestServer(t)
+	body := get(t, s, "/", nil).Body.String()
+	if !strings.Contains(body, "mobileNav.classList.remove('open')") {
+		t.Error("layout script must close the mobile nav")
+	}
+	// A tap on any menu link (not just Escape or the toggle) closes the menu.
+	if !strings.Contains(body, "mobileNav.querySelectorAll('a')") {
+		t.Error("menu links must be wired to close the menu on tap")
+	}
+}
+
+// TestLogoTapClosesMobileNav: the nav logo stays visible above the open menu;
+// tapping it must also fade the menu away while navigating home.
+func TestLogoTapClosesMobileNav(t *testing.T) {
+	s := newTestServer(t)
+	body := get(t, s, "/", nil).Body.String()
+	if !strings.Contains(body, "querySelector('.nav-logo')") {
+		t.Error("layout script must select the nav logo")
+	}
+	if !strings.Contains(body, "navLogo.addEventListener('click', closeMenu)") {
+		t.Error("logo tap must close the mobile menu")
+	}
+}

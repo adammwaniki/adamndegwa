@@ -80,11 +80,24 @@
     var navToggle = document.querySelector('.nav-toggle');
     var mobileNav = document.querySelector('.mobile-nav');
     if (navToggle && mobileNav) {
+      var closeMenu = function(){
+        mobileNav.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+        navToggle.setAttribute('aria-label', 'Open menu');
+      };
       navToggle.addEventListener('click', function(){
         var open = mobileNav.classList.toggle('open');
         navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
         navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
       });
+      // Tapping a menu item fades the menu away to reveal the swapped page.
+      mobileNav.querySelectorAll('a').forEach(function(a){
+        a.addEventListener('click', closeMenu);
+      });
+      // The logo stays visible above the open menu; tapping it goes home and
+      // fades the menu away too.
+      var navLogo = document.querySelector('.nav-logo');
+      if (navLogo) navLogo.addEventListener('click', closeMenu);
     }
     var darkToggle = document.querySelector('.dark-toggle');
     if (darkToggle) {
@@ -120,8 +133,7 @@
         navToggle.setAttribute('aria-label', 'Open menu');
         navToggle.focus();
       }
-    });
-  })();
+    });  })();
   </script>
 </body>
 </html>

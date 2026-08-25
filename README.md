@@ -52,6 +52,30 @@ docker build -t adamndegwa .        # or: podman build -t adamndegwa .
 docker run -p 8080:8080 adamndegwa  # or: podman run -p 8080:8080 adamndegwa
 ```
 
+## Deployment
+
+GitHub Actions handles build, tagging and delivery; the server runs only
+Docker + Caddy.
+
+- **CI** (`.github/workflows/ci.yml`, every push/PR): vet, tests, the 100%
+  coverage gate, and a build-only Docker smoke check.
+- **CD** (`.github/workflows/cd.yml`, push to `main` and `v*` tags): builds the
+  scratch image, tags it (`latest`, short SHA, semver on version tags), pushes
+  to GHCR (`ghcr.io/<owner>/adamndegwa`), then SSHes into the server to pull
+  and restart the container.
+
+One-time setup:
+
+1. On the server: `deploy/setup-server.sh <github-owner>` — installs Docker and
+   Caddy, opens 80/443, installs `deploy/Caddyfile`, and starts the container
+   bound to `127.0.0.1:8080`. Log in to GHCR once with a PAT (`read:packages`).
+2. In the GitHub repo, add secrets: `SERVER_HOST`, `SERVER_USER`,
+   `SERVER_SSH_KEY`.
+
+Then every push to `main` redeploys automatically; `git tag v1.0.0 && git push
+--tags` additionally publishes a semver-tagged image. Caddy terminates TLS for
+`adamndegwa.com` and redirects `www`.
+
 ## Testing
 
 Everything is test-driven; internal packages hold 100% unit-test coverage:
@@ -90,4 +114,6 @@ internal/wcag       WCAG contrast math + compliance proofs
 views/              html/template pages and partials
 static/             style.css, htmx.min.js, favicons
 content/            markdown content (one file per card)
+deploy/             Caddyfile + one-time server bootstrap
+.github/workflows/  CI (test gate) and CD (GHCR push + SSH deploy)
 ```

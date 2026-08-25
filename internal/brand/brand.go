@@ -74,5 +74,6 @@ func DarkPairings() []Pairing {
 		{"black on moss (selection/inverse)", DarkBlack, DarkMoss, 4.5},
 		{"brass on black (hover spark)", DarkBrass, DarkBlack, 4.5},
 		{"mist on black", DarkMist, DarkBlack, 4.5},
+		{"black on moss (card/tile hover)", DarkBlack, DarkMoss, 4.5},
 	}
 }

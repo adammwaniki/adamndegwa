@@ -40,6 +40,16 @@ body{
 }
 ::selection{background:var(--pine);color:var(--paper)}
 [data-theme="dark"] ::selection{background:var(--moss);color:#000}
+/* On hover, cards and tiles invert to the accent background (Moss in dark
+   mode). Light grays fail WCAG contrast on it, so hover text uses the dark
+   theme's black --paper (7.4:1). */
+[data-theme="dark"] .tile:hover p{color:var(--paper)}
+[data-theme="dark"] .tile:hover .tile-num{color:var(--paper)}
+[data-theme="dark"] .tile:hover .tile-arrow{stroke:var(--paper)}
+[data-theme="dark"] .card:hover .card-desc{color:var(--paper)}
+[data-theme="dark"] .card:hover .card-meta{color:var(--paper)}
+[data-theme="dark"] .card:hover .card-icon{color:var(--paper)}
+[data-theme="dark"] .card:hover .card-arrow{stroke:var(--paper)}
 
 /* main fills the viewport so the footer (margin-top:auto inside it) sticks to
    the bottom on short pages */
@@ -116,7 +126,7 @@ nav::after{
 [data-theme="dark"] .dark-toggle .moon{display:none}
 [data-theme="dark"] .dark-toggle .sun{display:block}
 .mobile-nav{
-  display:none;
+  display:flex;
   position:fixed;inset:0;top:60px;
   background:var(--paper);
   z-index:100;
@@ -125,8 +135,11 @@ nav::after{
   justify-content:center;
   gap:2rem;
   list-style:none;
+  opacity:0;
+  visibility:hidden;
+  transition:opacity .3s ease,visibility .3s;
 }
-.mobile-nav.open{display:flex}
+.mobile-nav.open{opacity:1;visibility:visible}
 .mobile-nav a{
   font-family:'Cinzel',serif;
   font-size:1.4rem;letter-spacing:.1em;
@@ -222,7 +235,6 @@ nav::after{
 .tile:hover .tile-arrow{stroke:var(--brass);transform:translate(3px,-3px)}
 .tile:hover .tile-num{color:var(--brass)}
 .tile:hover .tile-line{background:var(--brass);width:64px}
-[data-theme="dark"] .tile:hover p{color:#D9DAD6}
 
 /* ---------- page headers ---------- */
 .pg-header{

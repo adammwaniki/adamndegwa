@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.26"
+
+      - name: Vet
+        run: go vet ./...
+
+      - name: Test (includes WCAG2 compliance suite)
+        run: go test ./...
+
+      - name: Coverage gate (100% on internal packages)
+        run: scripts/check-coverage.sh
+
+      - name: Docker build smoke check
+        run: docker build -t adamndegwa:ci .
