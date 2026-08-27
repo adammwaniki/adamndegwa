@@ -85,7 +85,7 @@ func TestLoadCardFromMarkdownNoFrontmatter(t *testing.T) {
 	}
 }
 
-func TestLoadCardsFromDirSortsByDateAscending(t *testing.T) {
+func TestLoadCardsFromDirSortsByDateDescending(t *testing.T) {
 	dir := t.TempDir()
 	writeCard(t, dir, "newer", "---\ntitle: Newer\ndate: 2025-06-01\n---\n\nn")
 	writeCard(t, dir, "older", "---\ntitle: Older\ndate: 2025-01-01\n---\n\no")
@@ -95,8 +95,22 @@ func TestLoadCardsFromDirSortsByDateAscending(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(cards) != 3 || cards[0].ID != "older" || cards[1].ID != "middle" || cards[2].ID != "newer" {
+	if len(cards) != 3 || cards[0].ID != "newer" || cards[1].ID != "middle" || cards[2].ID != "older" {
 		t.Errorf("order = %v", []string{cards[0].ID, cards[1].ID, cards[2].ID})
+	}
+}
+
+func TestLoadCardsFromDirAutoNumbersIconlessCards(t *testing.T) {
+	dir := t.TempDir()
+	writeCard(t, dir, "newer", "---\ntitle: Newer\ndate: 2025-06-01\n---\n\nn")
+	writeCard(t, dir, "older", "---\ntitle: Older\ndate: 2025-01-01\nicon: \"#\"\n---\n\no")
+
+	cards, err := LoadCardsFromDir(dir)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if cards[0].CardIcon != "01" || cards[1].CardIcon != "#" {
+		t.Errorf("icons = %q, %q; want positional 01 then explicit #", cards[0].CardIcon, cards[1].CardIcon)
 	}
 }
 

@@ -31,7 +31,7 @@ type Card struct {
 	Subtitle    string   // Display tags: "Go · Architecture"
 	Tags        []string // Parsed tags: ["Go", "Architecture"]
 	Description string   // Short description for card listing
-	CardIcon    string   // Text icon: "{ }", "AI", etc.
+	CardIcon    string   // Text icon: "{ }", "AI", etc. Auto-assigned as a positional number ("01", "02", ...) when the markdown sets no icon.
 	ReadingTime string   // "3 min"
 	Date        string   // ISO date: "2025-06-01"
 	Updated     string   // Optional ISO date for last update

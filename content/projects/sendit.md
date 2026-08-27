@@ -2,7 +2,6 @@
 title: Sendit
 tags: Full-Stack, React, API
 description: A rapid-delivery courier service with tracking.
-icon: "01"
 reading_time: 2 min
 date: 2025-03-15
 demo_url: https://github.com/adammwaniki/sendit

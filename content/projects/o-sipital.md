@@ -2,7 +2,6 @@
 title: O-Sipital
 tags: CLI, Python
 description: Hospital management from the command line.
-icon: "03"
 reading_time: 2 min
 date: 2025-04-15
 demo_url: https://github.com/adammwaniki/o-sipital

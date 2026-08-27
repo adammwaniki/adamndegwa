@@ -1,6 +1,7 @@
 package content
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 	"sort"
@@ -35,7 +36,7 @@ func LoadCardFromMarkdown(path string) (Card, error) {
 }
 
 // LoadCardsFromDir reads all .md files from a directory, sorted by date
-// ascending (cards without dates sort first, by filename).
+// descending — most recent first (cards without dates sort last, by filename).
 func LoadCardsFromDir(dir string) ([]Card, error) {
 	entries, err := os.ReadDir(dir)
 	if err != nil {
@@ -54,8 +55,16 @@ func LoadCardsFromDir(dir string) ([]Card, error) {
 		cards = append(cards, card)
 	}
 	sort.SliceStable(cards, func(i, j int) bool {
-		return cards[i].Date < cards[j].Date
+		return cards[i].Date > cards[j].Date
 	})
+	// Cards without an icon in frontmatter are numbered by position in the
+	// sorted list (01 = most recent), so numbering stays correct as cards
+	// are added or removed.
+	for i := range cards {
+		if cards[i].CardIcon == "" {
+			cards[i].CardIcon = fmt.Sprintf("%02d", i+1)
+		}
+	}
 	return cards, nil
 }
 

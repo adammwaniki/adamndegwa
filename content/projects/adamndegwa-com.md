@@ -2,7 +2,6 @@
 title: adamndegwa.com
 tags: Go, HTMX, CSS
 description: This site. Server-rendered with Go's standard library, HTMX and pure CSS — WCAG2 tested.
-icon: "05"
 reading_time: 2 min
 date: 2025-06-10
 ---

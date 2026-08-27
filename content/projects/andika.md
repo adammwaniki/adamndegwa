@@ -2,7 +2,6 @@
 title: Andika
 tags: Back-end, API
 description: A notes management service built for clarity.
-icon: "02"
 reading_time: 2 min
 date: 2025-04-01
 demo_url: https://github.com/adammwaniki/andika
