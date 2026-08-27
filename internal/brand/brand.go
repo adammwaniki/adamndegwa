@@ -31,7 +31,7 @@ const (
 
 // Brand fonts, one per job (from the pptx type system).
 const (
-	FontDisplay = "Big Shoulders Inline Display" // hero names, tile titles
+	FontDisplay = "Big Shoulders Inline Display" // hero names, page and article titles
 	FontHeading = "Cinzel"                       // logo, role labels, headings
 	FontBody    = "Google Sans Flex"             // descriptions, body copy
 	FontMeta    = "Google Sans Code"             // nav, labels, numbers

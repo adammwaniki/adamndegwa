@@ -219,7 +219,7 @@ nav::after{
 }
 .tile-arrow{width:18px;height:18px;stroke:var(--stone);transition:stroke .3s ease,transform .3s ease}
 .tile h2{
-  font-family:'Big Shoulders Inline Display','Cinzel',serif;
+  font-family:'Cinzel',serif;
   font-weight:700;font-size:1.5rem;letter-spacing:.06em;text-transform:uppercase;
   transition:color .3s ease;
 }
@@ -273,7 +273,7 @@ nav::after{
 }
 .card-arrow{width:16px;height:16px;stroke:var(--stone);transition:stroke .3s ease,transform .3s ease}
 .card h2{
-  font-family:'Big Shoulders Inline Display','Cinzel',serif;
+  font-family:'Cinzel',serif;
   font-weight:700;font-size:1.35rem;letter-spacing:.04em;text-transform:uppercase;
   transition:color .3s ease;
 }

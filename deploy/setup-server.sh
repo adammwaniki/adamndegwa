@@ -17,6 +17,9 @@ sudo systemctl enable --now docker caddy
 if command -v firewall-cmd >/dev/null; then
   sudo firewall-cmd --permanent --add-service=http --add-service=https
   sudo firewall-cmd --reload
+elif command -v ufw >/dev/null; then
+  sudo ufw allow 80/tcp
+  sudo ufw allow 443/tcp
 fi
 
 # 3. Caddy config.
