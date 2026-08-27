@@ -70,13 +70,13 @@ body{
 }
 
 /* ---------- nav ---------- */
-nav{
+.site-nav{
   display:flex;align-items:center;justify-content:space-between;
   padding:0 3rem;height:60px;
   border-bottom:1px solid var(--hairline);
   position:relative;
 }
-nav::after{
+.site-nav::after{
   content:'';position:absolute;left:3rem;bottom:-1px;
   width:60px;height:2px;background:var(--gold);
 }
@@ -336,6 +336,12 @@ nav::after{
   border:1px solid var(--hairline);
   padding:1.2rem 1.4rem;margin:0 0 1.4rem;
   overflow-x:auto;
+  /* Long code lines would otherwise force the page wider than a mobile
+     viewport: overflow-x:auto only clips the pre itself, its min-content
+     width still propagates up through the flex ancestors. width:0 +
+     min-width:100% zeroes that intrinsic width so the pre stays at the
+     container width and scrolls internally. */
+  width:0;min-width:100%;
 }
 .art-body pre code{background:none;padding:0;font-size:.85rem;line-height:1.6}
 .art-body a{color:var(--pine)}
@@ -347,7 +353,7 @@ nav::after{
 }
 .art-pagenav a{
   text-decoration:none;color:var(--ink);
-  display:flex;flex-direction:column;gap:.3rem;max-width:48%;
+  display:flex;flex-direction:column;gap:.3rem;max-width:48%;min-width:0;
 }
 .art-pagenav a[rel="next"]{margin-left:auto;text-align:right}
 .pagenav-dir{
@@ -356,6 +362,7 @@ nav::after{
 }
 .pagenav-title{
   font-family:'Cinzel',serif;font-weight:700;font-size:.95rem;letter-spacing:.04em;
+  overflow-wrap:break-word;
 }
 .art-pagenav a:hover .pagenav-title{color:var(--pine)}
 .related{border-top:1px solid var(--hairline);padding-top:2rem;margin-top:1rem}
@@ -412,11 +419,21 @@ footer{
 }
 .ft-monogram{font-family:'Google Sans Flex',sans-serif;font-size:.8rem;color:var(--ink)}
 .ft-name{color:var(--pine);font-variation-settings:'wght' 600}
-.ft-hello a{color:var(--gold);text-decoration:none}
+.ft-hello a,.ft-social a{
+  text-decoration:none;position:relative;padding-bottom:3px;
+  transition:color .25s ease;
+}
+.ft-hello a{color:var(--gold)}
 .ft-hello a:hover{color:var(--pine)}
 .ft-social{display:flex;gap:1.6rem}
-.ft-social a{color:var(--stone);text-decoration:none;transition:color .25s ease}
+.ft-social a{color:var(--stone)}
 .ft-social a:hover{color:var(--gold)}
+/* Same growing-underline hover as the navbar links */
+.ft-hello a::after,.ft-social a::after{
+  content:'';position:absolute;left:0;bottom:0;width:0;height:1px;
+  background:var(--gold);transition:width .3s ease;
+}
+.ft-hello a:hover::after,.ft-social a:hover::after{width:100%}
 
 /* ---------- responsive ---------- */
 @media (max-width:900px){
@@ -426,11 +443,19 @@ footer{
   .tiles{grid-template-columns:1fr 1fr}
   .tile:nth-child(2n){border-right:none}
   .tile{border-bottom:1px solid var(--hairline)}
-  nav,.hero-left,.hero-right,.pg-header,.tag-cloud{padding-left:1.5rem;padding-right:1.5rem}
-  nav::after{left:1.5rem}
+  /* Grid items default to min-width:auto, so a long one-word title like
+     "BULLSHITTERS" would hold the column open and overflow the viewport.
+     Let tiles shrink and scale the title down to fit. */
+  .tile{min-width:0;padding-left:1.3rem;padding-right:1.3rem}
+  .tile h2{font-size:1.3rem}
+  .site-nav,.hero-left,.hero-right,.pg-header,.tag-cloud{padding-left:1.5rem;padding-right:1.5rem}
+  .site-nav::after{left:1.5rem}
   .nav-links{display:none}
   .nav-toggle{display:block}
   .dark-toggle{margin-left:auto}
   .contact-row{padding-left:1.5rem;padding-right:1.5rem;flex-direction:column;gap:.3rem}
+  .art-pagenav{flex-direction:column;gap:1.2rem}
+  .art-pagenav a{max-width:100%}
+  .art-pagenav a[rel="next"]{margin-left:0}
   footer{flex-direction:column;gap:1rem;align-items:flex-start;padding-left:1.5rem;padding-right:1.5rem}
 }

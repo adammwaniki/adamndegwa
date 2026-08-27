@@ -38,7 +38,7 @@ func TestAccessibilityLandmarks(t *testing.T) {
 		}
 		for _, want := range []string{
 			`class="skip-link" href="#page-wrapper"`, // skip to content
-			`<nav aria-label="Main">`,                // labelled nav landmark
+			`<nav class="site-nav" aria-label="Main">`, // labelled nav landmark
 			`<main id="page-wrapper">`,               // main landmark
 			`<footer>`,                               // footer landmark
 			`aria-label="Toggle dark mode"`,          // named icon buttons
