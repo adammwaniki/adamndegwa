@@ -3,17 +3,21 @@ package brand
 // Brand palette from references/brand-wcag2.pptx. These constants are the
 // single source of truth; static/style.css must match them (enforced by
 // tests in internal/wcag).
+//
+// Light Paper, Stone and Gold deviate slightly from the deck: the deck's
+// near-white canvas (#F7F7F4) caused glare complaints in day-mode UAT, so the
+// canvas was warmed/darkened and Stone/Gold deepened to keep WCAG AA.
 
 // Light theme (manga paper canvas).
 const (
 	LightInk      = "#0B0B09" // primary text, dark backgrounds
 	LightPine     = "#21663F" // brand color, secondary
-	LightPaper    = "#F7F7F4" // base canvas
+	LightPaper    = "#F0EFE9" // base canvas (darkened from deck's #F7F7F4: glare)
 	LightMoss     = "#49A863" // accent: highlights, CTA
-	LightGold     = "#876E2F" // accent: details, lines (WCAG AA)
+	LightGold     = "#7A632A" // accent: details, lines (WCAG AA)
 	LightBrass    = "#F0D053" // spark: rare moments
 	LightCharcoal = "#3B3F39" // neutral
-	LightStone    = "#72726D" // neutral (WCAG AA)
+	LightStone    = "#6A6A65" // neutral (WCAG AA)
 	LightMist     = "#D9DAD6" // neutral
 )
 

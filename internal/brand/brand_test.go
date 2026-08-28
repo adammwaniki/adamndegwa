@@ -6,12 +6,12 @@ func TestLightPaletteMatchesBrandDeck(t *testing.T) {
 	want := map[string]string{
 		"Ink":      "#0B0B09",
 		"Pine":     "#21663F",
-		"Paper":    "#F7F7F4",
+		"Paper":    "#F0EFE9",
 		"Moss":     "#49A863",
-		"Gold":     "#876E2F",
+		"Gold":     "#7A632A",
 		"Brass":    "#F0D053",
 		"Charcoal": "#3B3F39",
-		"Stone":    "#72726D",
+		"Stone":    "#6A6A65",
 		"Mist":     "#D9DAD6",
 	}
 	got := map[string]string{

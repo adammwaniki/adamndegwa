@@ -3,13 +3,13 @@
 
 :root{
   --ink:#0B0B09;
-  --paper:#F7F7F4;
+  --paper:#F0EFE9;
   --pine:#21663F;
   --moss:#49A863;
-  --gold:#876E2F;
+  --gold:#7A632A;
   --brass:#F0D053;
   --charcoal:#3B3F39;
-  --stone:#72726D;
+  --stone:#6A6A65;
   --mist:#D9DAD6;
   --hairline:rgba(11,11,9,.28);
 }
@@ -32,7 +32,7 @@ body{
   background:var(--paper);
   color:var(--ink);
   font-family:'Google Sans Flex',-apple-system,'Segoe UI',sans-serif;
-  font-variation-settings:'wght' 380;
+  font-variation-settings:'wght' 420;
   -webkit-font-smoothing:antialiased;
   min-height:100vh;
   display:flex;
@@ -184,7 +184,7 @@ body{
 .desc{
   font-size:1.25rem;
   line-height:1.55;
-  font-variation-settings:'wght' 340;
+  font-variation-settings:'wght' 400;
   max-width:38ch;
 }
 .desc strong{font-variation-settings:'wght' 640;color:var(--pine)}
@@ -225,7 +225,7 @@ body{
 }
 .tile p{
   font-size:.9rem;line-height:1.55;color:var(--charcoal);
-  font-variation-settings:'wght' 330;
+  font-variation-settings:'wght' 380;
   transition:color .3s ease;
 }
 .tile-line{width:40px;height:3px;background:var(--pine);margin-top:auto;transition:background .3s ease,width .3s ease}
